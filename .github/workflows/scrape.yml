@@ -1,7 +1,7 @@
-name: scheduled-scrape
+name: scrape-on-demand
 
 on:
-  workflow_dispatch:
+  workflow_dispatch:   # 버튼 눌러서만 실행됨
 
 permissions:
   contents: write
@@ -9,9 +9,6 @@ permissions:
 jobs:
   run-scraper:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: mobile_scraper   # 👈 모든 step 실행 경로를 mobile_scraper로 지정
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,8 +27,17 @@ jobs:
           python -m playwright install --with-deps
 
       - name: Run scrape
-        run: python scrape.py   # 👈 scrape.py 실행
         env:
           TARGET_URLS: ${{ secrets.TARGET_URLS }}
           CSS_ITEM:    ${{ secrets.CSS_ITEM }}
           CSS_TITLE:   ${{ secrets.CSS_TITLE }}
+        run: |
+          python scrape.py
+
+      - name: Commit & push results
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add -f data/results.json
+          git commit -m "Update results" || echo "No changes to commit"
+          git push
