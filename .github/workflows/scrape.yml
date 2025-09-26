@@ -34,10 +34,20 @@ jobs:
         run: |
           python scrape.py
 
+      # 👇 JSON 내용 확인
+      - name: Debug results.json
+        run: |
+          echo "=== results.json contents ==="
+          cat data/results.json || echo "File not found"
+
+      # 👇 git diff 출력
+      - name: Show git diff
+        run: git diff data/results.json || echo "no diff"
+
       - name: Commit & push results
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add -f data/results.json
-          git commit -m "Update results" || echo "No changes to commit"
+          git commit -m "Update results at $(date -u +"%Y-%m-%dT%H:%M:%SZ")" || echo "No changes to commit"
           git push
