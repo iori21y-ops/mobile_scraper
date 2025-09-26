@@ -26,7 +26,7 @@ async def scrape_url(browser, url: str):
     )
 
     # 페이지 접속 (네트워크 안정될 때까지 대기)
-    await page.goto(url, wait_until="networkidle", timeout=45000)
+    await page.goto(url, wait_until="domcontentloaded", timeout=45000)
 
     # 필요한 요소가 반드시 로딩되도록 명시적 대기 (선택자 필요시 수정)
     # await page.wait_for_selector(CSS_ITEM, timeout=10000)
