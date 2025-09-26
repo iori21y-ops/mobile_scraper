@@ -1,10 +1,10 @@
 {
-  "run_at_utc": "2025-09-26T08:37:48.771752+00:00",
+  "run_at_utc": "2025-09-26T09:06:45.072061+00:00",
   "count_sources": 2,
   "results": [
     {
       "source": "https://auto.danawa.com/news/",
-      "error": "Expected a selector at position 0\n  line 1:\n\n^"
+      "error": "Page.goto: Timeout 45000ms exceeded.\nCall log:\n  - navigating to \"https://auto.danawa.com/news/\", waiting until \"networkidle\"\n"
     },
     {
       "source": "https://auto.danawa.com/review/",
