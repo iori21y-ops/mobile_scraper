@@ -1,8 +1,6 @@
 name: scheduled-scrape
 on:
-  workflow_dispatch:     # 수동 실행 시 실행
-  push:
-    branches: [ main ]   # main 브랜치에 push 될 때마다 실행
+  workflow_dispatch:    # 수동 실행 시에만 동작
 
 permissions:
   contents: write
@@ -33,7 +31,7 @@ jobs:
           CSS_ITEM:    ${{ secrets.CSS_ITEM }}
           CSS_TITLE:   ${{ secrets.CSS_TITLE }}
           CSS_LINK:    ${{ secrets.CSS_LINK }}
-          MAX_ITEMS:   ${{ secrets.MAX_ITEMS || 10 }}   # 비어 있으면 기본값 10
+          MAX_ITEMS:   ${{ secrets.MAX_ITEMS || 10 }}   # 비어있으면 기본값 10
         run: python scrape.py
 
       - name: Commit & push results
